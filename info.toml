@@ -1,0 +1,9 @@
+[meta]
+name = "Skid Marks Manager"
+author = "Greep"
+category = "Utilities"
+
+version = "0.1"
+
+[script]
+timeout = 0
