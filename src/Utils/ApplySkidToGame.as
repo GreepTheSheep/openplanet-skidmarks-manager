@@ -6,7 +6,9 @@ class GameSkidApply
 
     void Apply()
     {
-        string modWorkDir = IO::FromUserGameFolder("Skins/Stadium/ModWork");
+        string stadiumDir = IO::FromUserGameFolder("Skins/Stadium");
+        if (!IO::FolderExists(stadiumDir)) IO::CreateFolder(stadiumDir);
+        string modWorkDir = stadiumDir + "/ModWork";
         if (!IO::FolderExists(modWorkDir)) IO::CreateFolder(modWorkDir);
         if (type.name != "Dirt") {
             string fxImageDir = IO::FromUserGameFolder("Skins/Stadium/ModWork/CarFxImage");
