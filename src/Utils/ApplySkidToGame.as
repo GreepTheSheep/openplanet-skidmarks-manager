@@ -63,10 +63,11 @@ namespace Skids
         if (!IO::FolderExists(modWorkDir)) IO::CreateFolder(modWorkDir);
         if (type.name != "Dirt") {
             string fxImageDir = IO::FromUserGameFolder("Skins/Stadium/ModWork/CarFxImage");
-            if (!IO::FolderExists(fxImageDir)) IO::CreateFolder(fxImageDir);
             string file = fxImageDir + "/Car"+type.name+"Marks.dds";
             trace("Deleting " + file);
             if (IO::FileExists(file)) IO::Delete(file);
+            array<string> filesInFxImageDir = IO::IndexFolder(fxImageDir, true);
+            if (filesInFxImageDir.Length == 0) IO::DeleteFolder(fxImageDir);
         } else {
             string file = modWorkDir + "/DirtMarks.dds";
             trace("Deleting " + file);
@@ -80,9 +81,7 @@ namespace Skids
 
         // Delete ModWork folder if there are no more skids on this directory
         array<string> files = IO::IndexFolder(modWorkDir, true);
-        if (files.Length == 0) {
-            IO::DeleteFolder(modWorkDir);
-        }
+        if (files.Length == 0) IO::DeleteFolder(modWorkDir);
     }
 
     void DeleteAll()
