@@ -53,7 +53,7 @@ class SkidTypeTab : Tab {
             if (skidType.name == "Dirt") {
                 dirtSkidDisableSmoke = UI::Checkbox("Disable Dirt Smoke", dirtSkidDisableSmoke);
             }
-            if (selectedSkidName.Length > 0 || dirtSkidDisableSmoke) {
+            if (selectedSkidName.Length > 0) {
                 if (UI::GreenButton(Icons::Check + " Apply")) {
                     Skids::ApplyToGame(skidType, selectedSkid, this);
                 }
