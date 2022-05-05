@@ -77,18 +77,18 @@ namespace Skids
         }
         tab.isSkidDeleted = true;
         tab.isSkidInProgress = false;
+
+        // Delete ModWork folder if there are no more skids on this directory
+        array<string> files = IO::IndexFolder(modWorkDir, true);
+        if (files.Length == 0) {
+            IO::DeleteFolder(modWorkDir);
+        }
     }
 
     void DeleteAll()
     {
         string modWorkDir = IO::FromUserGameFolder("Skins/Stadium/ModWork");
-        if (IO::FolderExists(modWorkDir)) {
-            array<string> files = IO::IndexFolder(modWorkDir, true);
-            for (uint i = 0; i < files.Length; i++) {
-                trace("Deleting " + files[i]);
-                IO::Delete(files[i]);
-            }
-        }
-        UI::ShowNotification(Icons::Check + " " + Meta::ExecutingPlugin().Name, "All customizations have been deleted.");
+        IO::DeleteFolder(modWorkDir, true);
+        UI::ShowNotification(Icons::Check + " " + Meta::ExecutingPlugin().Name, "All customizations have been deleted.\nPlease restart your game to apply changes.");
     }
 }
