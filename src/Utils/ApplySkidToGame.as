@@ -9,7 +9,10 @@ class GameSkidApply
         string stadiumDir = IO::FromUserGameFolder("Skins/Stadium");
         if (!IO::FolderExists(stadiumDir)) IO::CreateFolder(stadiumDir);
         string modWorkDir = stadiumDir + "/ModWork";
-        if (!IO::FolderExists(modWorkDir)) IO::CreateFolder(modWorkDir);
+        if (!IO::FolderExists(modWorkDir)) {
+            tab.needGameRestart = true;
+            IO::CreateFolder(modWorkDir);
+        }
         if (type.name != "Dirt") {
             string fxImageDir = IO::FromUserGameFolder("Skins/Stadium/ModWork/CarFxImage");
             if (!IO::FolderExists(fxImageDir)) IO::CreateFolder(fxImageDir);
@@ -78,6 +81,7 @@ namespace Skids
         }
         tab.isSkidDeleted = true;
         tab.isSkidInProgress = false;
+        tab.needGameRestart = true;
 
         // Delete ModWork folder if there are no more skids on this directory
         array<string> files = IO::IndexFolder(modWorkDir, true);

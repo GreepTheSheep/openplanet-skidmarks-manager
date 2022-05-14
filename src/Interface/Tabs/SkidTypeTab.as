@@ -8,6 +8,7 @@ class SkidTypeTab : Tab {
     bool isSkidApplied = false;
     bool isSkidDeleted = false;
     bool isSkidInProgress = false;
+    bool needGameRestart = false;
 
     bool dirtSkidDisableSmoke = false;
 
@@ -75,7 +76,9 @@ class SkidTypeTab : Tab {
         if (isSkidDeleted) {
             UI::NewLine();
             UI::Text("\\$0f0"+Icons::Check+" \\$zYour Skid is Deleted!");
-            UI::Text("Don't forget to restart the game to apply the changes.");
+        }
+        if (needGameRestart) {
+            UI::Text(Icons::ExclamationTriangle + " Don't forget to restart the game to apply the changes.");
         }
         UI::EndChild();
 
