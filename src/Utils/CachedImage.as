@@ -1,7 +1,7 @@
 class CachedImage
 {
     string m_url;
-    Resources::Texture@ m_texture;
+    UI::Texture@ m_texture;
 
     void Converted()
     {
@@ -32,7 +32,7 @@ class CachedImage
         while (!req.Finished()) {
             yield();
         }
-        @m_texture = Resources::GetTexture(req.Buffer());
+        @m_texture = UI::LoadTexture(req.Buffer());
         if (IS_DEV_MODE) trace("Loading texture: " + m_url);
         if (m_texture.GetSize().x == 0) {
             @m_texture = null;
