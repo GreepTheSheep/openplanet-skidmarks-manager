@@ -1,5 +1,5 @@
 class HomePageTab : Tab {
-    Resources::Font@ t_fontHeader = Resources::GetFont("DroidSans-Bold.ttf", 18, -1, -1, true, true, true);
+    UI::Font@ t_fontHeader = UI::LoadFont("DroidSans-Bold.ttf", 18, -1, -1, true, true, true);
 
     string GetLabel() override { return Icons::Home; }
     vec4 GetColor() override { return vec4(1,0.5,0,1); }
