@@ -89,9 +89,18 @@ namespace Skids
     }
 
     void DeleteAll()
-    {
+    {   
+        array<SkidTypeTab@> tabs = g_window.skidTabs;
+        for(uint i = 0; i < tabs.Length; i++)
+        {
+            SkidTypeTab@ tab = tabs[i];
+            tab.isSkidApplied = false;
+            tab.isSkidDeleted = true;
+            tab.isSkidInProgress = false;
+            tab.needGameRestart = true;
+        }
         string modWorkDir = IO::FromUserGameFolder("Skins/Stadium/ModWork");
         IO::DeleteFolder(modWorkDir, true);
-        UI::ShowNotification(Icons::Check + " " + Meta::ExecutingPlugin().Name, "All customizations have been deleted.\nPlease restart your game to apply changes.");
+        UI::ShowNotification(Icons::Check + " " + Meta::ExecutingPlugin().Name, "All customizations have been deleted.\nPlease rejoin the map to apply changes.");
     }
 }

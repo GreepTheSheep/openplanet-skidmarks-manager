@@ -1,8 +1,10 @@
 Window@ g_window;
 Repo@ g_repo;
+Config@ g_config;
 
 void Main()
 {
+    @g_config = Config();
     @g_window = Window();
     @g_repo = Repo();
 }
