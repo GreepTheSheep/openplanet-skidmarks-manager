@@ -101,6 +101,27 @@ class SkidType
             skids.InsertLast(skid);
         }
         print("Loaded " + skids.Length + " skids for " + name + " type");
-        g_window.AddTab(SkidTypeTab(this));
+        SkidTypeTab@ tab = SkidTypeTab(this);
+        if(skids.Length > 0)
+        {
+            Skid@ defaultSkid = skids[0];
+            if(g_config.data.HasKey(name))
+            {
+                string skidName = g_config.data[name];
+                for(uint i = 0; i < skids.Length; i++)
+                {
+                    if(skidName == skids[i].name){
+                        trace("Found default: " + skidName);
+                        Skid@ defaultSkid = skids[i];
+                        tab.SetDefaultSkid(defaultSkid);
+                    }
+                }
+            }
+            else tab.SetDefaultSkid(defaultSkid);
+        }
+        if(g_config.data.HasKey("dirtDisableSmoke"))
+            tab.dirtSkidDisableSmoke = g_config.data["dirtDisableSmoke"];
+        
+        g_window.AddTab(tab, false, true);
     }
 }

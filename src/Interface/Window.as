@@ -3,8 +3,10 @@ class Window
     bool isOpened = false;
 
     array<Tab@> tabs;
+    array<SkidTypeTab@> skidTabs;
     Tab@ activeTab;
     Tab@ c_lastActiveTab;
+
 
     Window()
     {
@@ -12,10 +14,13 @@ class Window
         AddTab(AdvancedTab());
     }
 
-    void AddTab(Tab@ tab, bool select = false){
+    void AddTab(Tab@ tab, bool select = false, bool isSkidTab = false){
         tabs.InsertLast(tab);
         if (select) {
             @activeTab = tab;
+        }
+        if (isSkidTab){
+            skidTabs.InsertLast(cast<SkidTypeTab@>(tab));
         }
     }
 

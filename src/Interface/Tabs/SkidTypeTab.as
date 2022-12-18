@@ -4,6 +4,7 @@ class SkidTypeTab : Tab {
 
     string selectedSkidName;
     Skid@ selectedSkid;
+    Skid@ defaultSkid;
 
     bool isSkidApplied = false;
     bool isSkidDeleted = false;
@@ -17,6 +18,18 @@ class SkidTypeTab : Tab {
         @skidType = type;
     }
 
+    void SetDefaultSkid(Skid@ skid, bool select = true)
+    {
+        @defaultSkid = @skid;
+        g_config.data[skidType.name] = skid.name;
+        g_config.Save();
+        if(select)
+        {
+            @selectedSkid = @skid;
+            selectedSkidName = selectedSkid.name;
+        }
+    }
+
     string GetLabel() override { return skidType.name; }
 
     vec4 GetColor() override {
@@ -25,6 +38,14 @@ class SkidTypeTab : Tab {
         else if (skidType.name == "Grass") return vec4(0.0, 0.5, 0.0, 1.0);
 
         else return vec4(0.2f, 0.4f, 0.8f, 1);
+    }
+
+    void Apply()
+    {
+        g_config.data["dirtDisableSmoke"] = dirtSkidDisableSmoke;
+        g_config.Save();
+        SetDefaultSkid(selectedSkid, false);
+        Skids::ApplyToGame(skidType, selectedSkid, this);
     }
 
     void Render() override
@@ -52,11 +73,11 @@ class SkidTypeTab : Tab {
         }
         if (!isSkidInProgress) {
             if (skidType.name == "Dirt") {
-                dirtSkidDisableSmoke = UI::Checkbox("Disable Dirt Smoke", dirtSkidDisableSmoke);
+                dirtSkidDisableSmoke = UI::Checkbox("Disable Dirt Smoke (May require game restart)", dirtSkidDisableSmoke);
             }
             if (selectedSkidName.Length > 0) {
                 if (UI::GreenButton(Icons::Check + " Apply")) {
-                    Skids::ApplyToGame(skidType, selectedSkid, this);
+                    Apply();
                 }
                 UI::SameLine();
             }
@@ -78,7 +99,7 @@ class SkidTypeTab : Tab {
             UI::Text("\\$0f0"+Icons::Check+" \\$zYour Skid is Deleted!");
         }
         if (needGameRestart) {
-            UI::Text(Icons::ExclamationTriangle + " Don't forget to restart the game to apply the changes.");
+            UI::Text(Icons::ExclamationTriangle + " Don't forget to rejoin the map to apply the changes.");
         }
         UI::EndChild();
 
